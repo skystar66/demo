@@ -3,6 +3,7 @@ package com.liveme.demo.listnode.rolling;
 
 import java.util.List;
 
+/**翻转链表*/
 public class Solution {
 
 
