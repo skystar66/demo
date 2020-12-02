@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.CRC32;
 
 public class ByteTest {
@@ -38,6 +39,15 @@ public class ByteTest {
 
 //        System.out.println("sign:"+sign());
         System.out.println(calculateSign("","1","1","1"));
+
+
+        ConcurrentHashMap<String,String> map = new ConcurrentHashMap<>(2);
+
+
+        map.put("1","2");
+        map.put("2","2");
+        String val = map.put("3","2");
+
 
 
         String userId = "";

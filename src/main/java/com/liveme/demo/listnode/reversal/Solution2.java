@@ -23,11 +23,12 @@ public class Solution2 {
         ListNode pre = dummNode;
         ListNode fast = dummNode;
         ListNode slow = dummNode;
+        //先让fast 先走 n步
         for (int i=0;i<n;i++) {
             fast = fast.next;
         }
         ListNode temp = fast.next;
-        //先让slow 先走 m步
+        //slow走m-1步
         for (int i=1;i<m;i++) {
             slow=slow.next;
         }
