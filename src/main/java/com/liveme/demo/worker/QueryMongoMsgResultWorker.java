@@ -1,7 +1,7 @@
 package com.liveme.demo.worker;
 
 import com.alibaba.fastjson.JSONObject;
-import com.liveme.demo.masterwork.Excutes;
+//import com.liveme.demo.masterwork.Excutes;
 import com.liveme.demo.util.DButil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;

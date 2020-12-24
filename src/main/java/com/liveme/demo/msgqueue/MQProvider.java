@@ -1,24 +1,27 @@
 package com.liveme.demo.msgqueue;
 
 
+import com.liveme.demo.msgqueue.room.LiveRoom;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public final class MQProvider {
 
-    public static final int threadCnt = 5;//队列数量
+    public static final int threadCnt = Runtime.getRuntime().availableProcessors()*2;//队列数量
 
 
-    private static final Map<Integer, LinkedBlockingQueue<String>> rPCRoomMsgQueueMap = new HashMap<>();
+    public static final Map<Integer, ConcurrentLinkedQueue<LiveRoom>> rPCRoomMsgQueueMap = new HashMap<>();
 
 
     static {
         for (int i = 0; i < threadCnt; i++) {
-            rPCRoomMsgQueueMap.put(i, new LinkedBlockingQueue<>(3000));
+            rPCRoomMsgQueueMap.put(i,
+                    new ConcurrentLinkedQueue<>());
         }
     }
 
@@ -28,7 +31,7 @@ public final class MQProvider {
      * @param index
      * @return
      */
-    public static LinkedBlockingQueue<String> getFromRPCRoomMsgQueueByIndex(int index) {
+    public static ConcurrentLinkedQueue<LiveRoom> getFromRPCRoomMsgQueueByIndex(int index) {
         return rPCRoomMsgQueueMap.get(index);
     }
 
@@ -38,7 +41,7 @@ public final class MQProvider {
      * @param key
      * @return
      */
-    public static LinkedBlockingQueue<String> getFromRPCRoomMsgQueueByKey(int key) {
+    public static ConcurrentLinkedQueue<LiveRoom> getFromRPCRoomMsgQueueByKey(int key) {
         int index = key % threadCnt;
         return rPCRoomMsgQueueMap.get(index);
     }
@@ -48,7 +51,7 @@ public final class MQProvider {
      *
      * @return
      */
-    public static LinkedBlockingQueue<String>  getFromRPCRoomMsgQueueByRandom() {
+    public static ConcurrentLinkedQueue<LiveRoom>  getFromRPCRoomMsgQueueByRandom() {
         return rPCRoomMsgQueueMap.get(RandomUtils.nextInt(0, threadCnt));
     }
 
@@ -57,8 +60,8 @@ public final class MQProvider {
      *
      * @param msg
      */
-    public static void push(String msg) {
-        if (StringUtils.isNotEmpty(msg)) {
+    public static void push(LiveRoom msg) {
+        if (null != msg) {
             getFromRPCRoomMsgQueueByRandom()
                     .offer(msg);
         }
@@ -70,15 +73,26 @@ public final class MQProvider {
      *
      * @param msg
      */
-    public static void push(String msg,String roomId) {
+    public static void push(LiveRoom msg,String roomId) {
 
         if (StringUtils.isNotEmpty(roomId)) {
-            getFromRPCRoomMsgQueueByKey(roomId.hashCode()).offer(msg);
+            try {
+                getFromRPCRoomMsgQueueByKey(roomId.hashCode()).offer(msg);
+            }catch (Exception ex) {
+                ex.printStackTrace();
+                System.out.println(roomId+"error"+ex);
+            }
             return;
         }
-        if (StringUtils.isNotEmpty(msg)) {
+        if (null != msg) {
             getFromRPCRoomMsgQueueByRandom()
                     .offer(msg);
         }
     }
+
+
+    public static void main(String[] args) {
+        getFromRPCRoomMsgQueueByKey("1000".hashCode());
+    }
+
 }

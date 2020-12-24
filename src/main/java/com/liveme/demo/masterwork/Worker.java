@@ -1,6 +1,7 @@
 package com.liveme.demo.masterwork;
 
 import com.alibaba.fastjson.JSONObject;
+import com.liveme.demo.msgqueue.room.LiveRoom;
 import com.liveme.demo.util.DButil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -14,11 +15,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Worker implements Runnable {
 
     private static Logger logger = LoggerFactory.getLogger(Worker.class);
-    private ConcurrentLinkedQueue<Task> workQueue;
+    private ConcurrentLinkedQueue<LiveRoom> workQueue;
     private CopyOnWriteArrayList<Object> resultMapList;
 
 
-    public void setWorkQueue(ConcurrentLinkedQueue<Task> workQueue) {
+    public void setWorkQueue(ConcurrentLinkedQueue<LiveRoom> workQueue) {
         this.workQueue = workQueue;
     }
 
@@ -32,19 +33,20 @@ public class Worker implements Runnable {
 
     public void run() {
         while (true) {
-           Task input = this.workQueue.poll();
+            LiveRoom input = this.workQueue.poll();
             if (input == null) break;
             Object output = handle(input);
-            if (null != output) {
-                this.resultMapList.add(output);
-            }
+//            if (null != output) {
+//                this.resultMapList.add(output);
+//            }
         }
     }
 
-    private Object handle(Task task) {
+    private Object handle(LiveRoom task) {
         try {
-            DBObject msgDB = findOne2(task.getValue(), task.getObject(), task.getTable());
-            return msgDB;
+//            DBObject msgDB = findOne2(task.getValue(), task.getObject(), task.getTable());
+            task.batchSend();
+            return 1;
         } catch (Exception e) {
             e.printStackTrace();
         }

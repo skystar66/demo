@@ -1,6 +1,7 @@
 package com.liveme.demo.masterwork;
 
 import com.alibaba.fastjson.JSONObject;
+import com.liveme.demo.msgqueue.room.LiveRoom;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.concurrent.Executors;
 
 public class Master {
 
-    private ConcurrentLinkedQueue<Task> workQueue = new ConcurrentLinkedQueue<Task>();
+    private ConcurrentLinkedQueue<LiveRoom> workQueue = new ConcurrentLinkedQueue<LiveRoom>();
 
     private HashMap<String, Thread> workers = new HashMap<String, Thread>();
 
@@ -28,7 +29,7 @@ public class Master {
     }
 
     //提交任务
-    public void submit(Task task) {
+    public void submit(LiveRoom task) {
         this.workQueue.add(task);
     }
 
