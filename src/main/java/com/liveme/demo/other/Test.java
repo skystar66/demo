@@ -6,11 +6,29 @@ public class Test {
 
 
     public static void main(String[] args) {
-//        System.out.println(getEndMoney());
-//        System.out.println(getEndMoney2());
+        System.out.println(getEndMoney());
+        System.out.println(getEndMoney2());
 
 
 //        System.out.println(print());
+
+
+        ConcurrentMap<String, ConcurrentHashMap<String, String>> gagMappingMap = new ConcurrentHashMap<String, ConcurrentHashMap<String, String>>();
+        ConcurrentHashMap<String, String> temp = new ConcurrentHashMap<>();
+        temp.put("a","1");
+        temp.put("b","1");
+        temp.put("c","1");
+
+        gagMappingMap.put("1",temp);
+
+        System.out.println(gagMappingMap.get("1").size());
+
+        temp.remove("a");
+        temp.remove("b");
+        temp.remove("c");
+
+
+        System.out.println(gagMappingMap.get("1"));
 
 
 
@@ -77,7 +95,7 @@ public class Test {
         double sumHour = day*hour*month;// 全年总工作时长
         double workerDay = day*4;//已工作天数
         double workerHour = hour*workerDay;//已工作时长
-        return workerHour/sumHour*38000*3.5;//工作时长/全年总时长*月薪*系数
+        return workerHour/sumHour*38000*2.5;//工作时长/全年总时长*月薪*系数
 
 
 
@@ -91,7 +109,7 @@ public class Test {
 
         double avgMonth = 38000/12;
 
-        return avgMonth*4*3.5;
+        return avgMonth*4*2.5;
 
 
     }
