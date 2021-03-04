@@ -10,6 +10,10 @@ public class Test {
         System.out.println(getEndMoney2());
 
 
+        Integer num1=1290;
+        Integer num2=1290;
+        System.out.println(num1==num2);
+
 //        System.out.println(print());
 
 
