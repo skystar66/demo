@@ -76,10 +76,10 @@ public class MD5 {
 	}
 	
 	public static void main(String[] args) {
-    System.out.println(MD5.crypt("60000170230|WEB|WEB|813e7f5a-b134-410a-bfe8-958e533bee19|1408590570297"));
-    System.out.println(new java.util.Date(1408688761252L));
-    System.out.println(new java.util.Date(1408590570297L));
-    System.out.println(MD5.crypt("987431201260314624"));
+//    System.out.println(MD5.crypt("60000170230|WEB|WEB|813e7f5a-b134-410a-bfe8-958e533bee19|1408590570297"));
+//    System.out.println(new java.util.Date(1408688761252L));
+//    System.out.println(new java.util.Date(1408590570297L));
+//    System.out.println(MD5.crypt("987431201260314624"));
     
   }
 

@@ -10,6 +10,9 @@ import com.esotericsoftware.kryo.pool.KryoPool;
 import com.liveme.demo.redis.point.Point;
 import de.javakaffee.kryoserializers.UnmodifiableCollectionsSerializer;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.flink.api.common.typeinfo.TypeInformation;
+import org.javatuples.Sextet;
+import org.javatuples.Tuple;
 import org.objenesis.strategy.StdInstantiatorStrategy;
 
 import java.io.*;
@@ -43,6 +46,8 @@ public class KryoUtil {
             kryo.setRegistrationRequired(false); //默认值就是 false，添加此行的目的是为了提醒维护者，不要改变这个配置
             //Fix the NPE bug when deserializing Collections.
             kryo.register(UnmodifiableCollectionsSerializer.class);
+            kryo.register(Tuple.class);
+
             ((Kryo.DefaultInstantiatorStrategy) kryo.getInstantiatorStrategy()).setFallbackInstantiatorStrategy(new StdInstantiatorStrategy());
             return kryo;
         }
