@@ -140,6 +140,9 @@ public class Test {
 //        System.out.println("compareStringBuilder cost:"+(System.currentTimeMillis()-start)+"ms");
 
 
+        ThreadLocal threadLocal = new ThreadLocal();
+
+        threadLocal.set("1");
         System.out.println((byte) 0x04&0xFF);
 //        System.out.println(mqpTest());
 //        System.out.println(compareStringBuilder());
