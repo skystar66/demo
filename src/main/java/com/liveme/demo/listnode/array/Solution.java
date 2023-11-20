@@ -9,6 +9,7 @@ public class Solution {
         int[] nums = new int[]{1, 1, 2, 3, 4, 4};
 
         System.out.println(removeDuplicates(nums));
+        System.out.println(nums);
     }
 
 
