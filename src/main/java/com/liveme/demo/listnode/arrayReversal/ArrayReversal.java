@@ -3,7 +3,7 @@ package com.liveme.demo.listnode.arrayReversal;
 /**
  * @author xuliang
  * @version 1.0
- * @project demo
+ * @project 数组翻转
  * @description
  * @date 2023/11/14 11:06:42
  */

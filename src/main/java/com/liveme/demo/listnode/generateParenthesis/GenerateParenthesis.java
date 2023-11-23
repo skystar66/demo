@@ -14,12 +14,10 @@ import java.util.List;
 public class GenerateParenthesis {
 
     static List<String> res = new ArrayList<>();
-
     public static void main(String[] args) {
-//        System.out.println(generateParenthesis(3));
-
         int[] nums=new int[]{2,3,6,7};
         System.out.println(combinationSum(nums,7));
+        System.out.println(generateParenthesis(3));
     }
 
     public static List<String> generateParenthesis(int n) {
@@ -32,7 +30,6 @@ public class GenerateParenthesis {
             res.add(curStr);
             return;
         }
-
         if (left > 0) { // 如果左括号还剩余的话，可以拼接左括号
             dfs(left - 1, right, curStr + "(");
         }
@@ -40,14 +37,6 @@ public class GenerateParenthesis {
             dfs(left, right - 1, curStr + ")");
         }
     }
-
-
-
-
-
-
-
-
 
     static List<List<Integer>> res1 = new ArrayList();
     public static List<List<Integer>> combinationSum(int[] candidates, int target) {

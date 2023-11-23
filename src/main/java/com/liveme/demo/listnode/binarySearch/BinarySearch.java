@@ -3,7 +3,7 @@ package com.liveme.demo.listnode.binarySearch;
 /**
  * @author xuliang
  * @version 1.0
- * @project demo
+ * @project 二分查找，利用中位数
  * @description
  * @date 2023/11/14 10:01:05
  */

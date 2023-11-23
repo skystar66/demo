@@ -1,12 +1,15 @@
 package com.liveme.demo.cal;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,19 +21,40 @@ import java.util.List;
  */
 public class Recurrence {
     public static void main(String[] args) {
-        LocalDate startDate = LocalDate.of(2023, 1, 1); // 开始日期
-        LocalDate endDate = LocalDate.of(2023, 12, 31); // 结束日期
-        int weeklyInterval = 1; // 每周间隔
-        DayOfWeek targetDayOfWeek = DayOfWeek.MONDAY; // 目标星期几
-        int nthDayOfWeek = 2; // 第几个星期几，例如第2个星期一
-        DayOfWeek lastDayOfWeek = DayOfWeek.FRIDAY; // 最后一个星期几
+//        LocalDate startDate = LocalDate.of(2023, 1, 1); // 开始日期
+//        LocalDate endDate = LocalDate.of(2023, 12, 31); // 结束日期
+//        int weeklyInterval = 1; // 每周间隔
+//        DayOfWeek targetDayOfWeek = DayOfWeek.MONDAY; // 目标星期几
+//        int nthDayOfWeek = 2; // 第几个星期几，例如第2个星期一
+//        DayOfWeek lastDayOfWeek = DayOfWeek.FRIDAY; // 最后一个星期几
+//
+//        List<LocalDate> dates = getDatesInRange(startDate, endDate, weeklyInterval, targetDayOfWeek, nthDayOfWeek, lastDayOfWeek);
+//
+//        System.out.println("Dates:");
+//        for (LocalDate date : dates) {
+//            System.out.println(date);
+//        }
 
-        List<LocalDate> dates = getDatesInRange(startDate, endDate, weeklyInterval, targetDayOfWeek, nthDayOfWeek, lastDayOfWeek);
 
-        System.out.println("Dates:");
-        for (LocalDate date : dates) {
-            System.out.println(date);
+//      lastDayOfWeek(Calendar.FRIDAY);
+//
+//
+//        LocalDate currentDate = LocalDate.now();
+//        int totalWeeks = currentDate.with(TemporalAdjusters.lastDayOfMonth())
+//                .get(WeekFields.ISO.weekOfMonth());
+//
+//        System.out.println("Total weeks in the current month: " + totalWeeks);
+        int targetDayOfWeek = Calendar.THURSDAY; // 目标星期几
+
+        Calendar calendar = Calendar.getInstance();
+        int currentMonth = calendar.get(Calendar.MONTH);
+
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        while (calendar.get(Calendar.DAY_OF_WEEK) != targetDayOfWeek) {
+            calendar.add(Calendar.DAY_OF_MONTH, -1);
         }
+
+        System.out.println("Last week's " + getDayOfWeekName(targetDayOfWeek) + " of the current month: " + calendar.getTime());
     }
 
     public static List<LocalDate> getDatesInRange(LocalDate startDate, LocalDate endDate, int weeklyInterval, DayOfWeek targetDayOfWeek, int nthDayOfWeek, DayOfWeek lastDayOfWeek) {
@@ -94,4 +118,46 @@ public class Recurrence {
     }
 
 
+    public static void lastDayOfWeek(int targetDayOfWeek){
+        Calendar calendar = Calendar.getInstance();
+        int currentMonth = calendar.get(Calendar.MONTH);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        while (calendar.get(Calendar.MONTH) == currentMonth) {
+            if (calendar.get(Calendar.DAY_OF_WEEK) == targetDayOfWeek) {
+                int currentWeek = calendar.get(Calendar.WEEK_OF_MONTH);
+                calendar.add(Calendar.DAY_OF_MONTH, 7);
+
+                if (calendar.get(Calendar.MONTH) != currentMonth || calendar.get(Calendar.WEEK_OF_MONTH) != currentWeek) {
+                    calendar.add(Calendar.DAY_OF_MONTH, -7);
+                    break;
+                }
+            } else {
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+            }
+        }
+
+        int lastWeekDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println("Last week's " + getDayOfWeekName(targetDayOfWeek) + " of the current month: " + lastWeekDayOfMonth);
+    }
+    public static String getDayOfWeekName(int dayOfWeek) {
+        switch (dayOfWeek) {
+            case Calendar.SUNDAY:
+                return "Sunday";
+            case Calendar.MONDAY:
+                return "Monday";
+            case Calendar.TUESDAY:
+                return "Tuesday";
+            case Calendar.WEDNESDAY:
+                return "Wednesday";
+            case Calendar.THURSDAY:
+                return "Thursday";
+            case Calendar.FRIDAY:
+                return "Friday";
+            case Calendar.SATURDAY:
+                return "Saturday";
+            default:
+                return "";
+        }
+    }
 }
